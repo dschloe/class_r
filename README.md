@@ -1,11 +1,10 @@
-# class_r
-temp
+## 개요
+- 본 Repo는 강림직업전문학교 수강생을 위해 예시로 작성한 Repo입니다.
+- 본 Repo에서는 `R을 활용한 데이터 과학` 발표자료를 공유하기 위해 만들어졌습니다. 
 
-추석 연휴 재미었다. 
-첫번째 커밋을 시작합니다...
-
-git add . 
-git commit -m "1st commit"
-
-$ git config --global user.email "your@email.com"
-$ git config --global user.name "username"
+## Git & Github 
+- 우선 `Git`을 설치합니다. 
+  + 싸이트: https://git-scm.com/
+  + 설정은 모두 기본 값으로 해주시기 바랍니다. 
+- Terimnal 창에서 `git`을 실행하여 정상적으로 설치되었는지 유무를 확인합니다.
+- 이제 `RStudio`에서 
