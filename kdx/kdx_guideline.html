@@ -1553,6 +1553,7 @@ library(readxl)</code></pre>
 <h2>2단계 데이터 불러오기</h2>
 <ul>
 <li>데이터가 많아서 순차적으로 진행하도록 한다.</li>
+<li>각 데이터에 대한 설명은 활용데이터설명을 참조한다.</li>
 </ul>
 <div id="삼성카드-데이터" class="section level3">
 <h3>(1) 삼성카드 데이터</h3>
@@ -1601,9 +1602,12 @@ samsung_card2 &lt;- read.csv(&quot;data/Samsungcard.csv&quot;, fileEncoding = &q
 <li><code>RAM</code>을 아껴 쓰자.</li>
 </ul></li>
 </ul>
-<pre class="r"><code>rm(samsung_card2)
-ls()</code></pre>
+<pre class="r"><code>rm(samsung_card2) # 객체 지우는 함수
+ls() # 현재 저장된 객체 확인하는 함수</code></pre>
 <pre><code>## [1] &quot;samsung_card&quot;</code></pre>
+</div>
+<div id="신한카드-데이터" class="section level3">
+<h3>(2) 신한카드 데이터</h3>
 <ul>
 <li>이번에는 <code>ShinhanCard.xslx</code> 데이터를 불러온다.</li>
 </ul>
@@ -1638,6 +1642,39 @@ head(shinhancard)</code></pre>
 ## 4 20190101 F     20대     M004_기타요식                            446. 
 ## 5 20190101 F     20대     M005_유흥                                 24.2
 ## 6 20190101 F     20대     M006_백화점                               35.3</code></pre>
+</div>
+<div id="지인플러스" class="section level3">
+<h3>(3) 지인플러스</h3>
+<ul>
+<li>지인플러스는 아파트시세(<code>GIN00009A</code>)와 아파트 거래량(<code>GIN00008B</code>)을 담은 코드이다.</li>
+</ul>
+<pre class="r"><code>gin_8a &lt;- read_csv(&quot;data/GIN00008A.csv&quot;)
+gin_9a &lt;- read_csv(&quot;data/GIN00009A.csv&quot;)</code></pre>
+<ul>
+<li>위 두개의 데이터를 확인해본다.</li>
+</ul>
+<pre class="r"><code>glimpse(gin_8a)</code></pre>
+<pre><code>## Rows: 937,904
+## Columns: 9
+## $ ym             &lt;dbl&gt; 200601, 200602, 200603, 200604, 200605, 200606, 200607…
+## $ area_lvl_scor  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ lgdng_cd       &lt;chr&gt; &quot;0000000000&quot;, &quot;0000000000&quot;, &quot;0000000000&quot;, &quot;0000000000&quot;…
+## $ trd_cont       &lt;dbl&gt; 23357, 38617, 52241, 44253, 41916, 30257, 28613, 37362…
+## $ avg_trd_cont   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ trd_deal_rat   &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ mtrnt_cont     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ avg_mtrnt_cont &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ mtrnt_deal_rat &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</code></pre>
+<pre class="r"><code>glimpse(gin_9a)</code></pre>
+<pre><code>## Rows: 785,805
+## Columns: 4
+## $ lgdng_cd &lt;dbl&gt; 1.1e+09, 1.1e+09, 1.1e+09, 1.1e+09, 1.1e+09, 1.1e+09, 1.1e+0…
+## $ std_date &lt;date&gt; 2006-01-21, 2006-02-21, 2006-03-21, 2006-04-21, 2006-05-21,…
+## $ trd_prc  &lt;dbl&gt; 1289, 1271, 1291, 1307, 1321, 1335, 1357, 1381, 1411, 1444, …
+## $ ldpb_prc &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</code></pre>
+</div>
+<div id="section" class="section level3">
+<h3></h3>
 </div>
 </div>
 
