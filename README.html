@@ -439,6 +439,59 @@ summary {
 <li><p>마지막, 파일과 메시지를 <code>Github Repo</code> 저장소에 업로드 합니다.</p></li>
 </ul>
 <pre class="bash"><code>git push</code></pre>
+<ul>
+<li>정상적으로 완료된 메시지는 아래와 같습니다. (예)</li>
+</ul>
+<pre><code>username$ git push
+Enumerating objects: 6, done.
+Counting objects: 100% (6/6), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 998 bytes | 998.00 KiB/s, done.
+Total 5 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), done.
+To https://github.com/dschloe/class_r.git
+   26aab11..7c22ba0  main -&gt; main</code></pre>
+<div id="에러-핸들링" class="section level3">
+<h3>에러 핸들링</h3>
+<ul>
+<li><code>git</code>은 충돌이 나면 수정하기가 매우 골치 아픕니다.
+<ul>
+<li>따라서, 위 순서를 지켜주셔야 합니다.</li>
+</ul></li>
+<li>첫번째 이슈: 로그인
+<ul>
+<li>아래 메시지를 확인합니다.</li>
+</ul>
+<pre class="bash"><code> *** Please tell me who you are.
+Run
+git config --global user.email &quot;you@example.com&quot;
+git config --global user.name &quot;Your Name&quot;
+to set your account&#39;s default identity.
+Omit --global to set the identity only in this repository.</code></pre></li>
+<li>위 메시지는 <code>git commit</code>을 할 때 발생합니다.</li>
+<li>위 메시지는 쉽게 말해 로그인을 하라는 뜻입니다.
+<ul>
+<li>두개의 <code>git config</code>을 그대로 실행하며 이 때 독자의 깃허브 메일과 아이디를 입력하시면 됩니다.</li>
+</ul></li>
+<li>두번째 이슈: 깃허브 싸이트에서 수정
+<ul>
+<li>초보자들은 IDE보다는 웹사이트가 편합니다. 그래서, 웹사이트에서 무언가를 수정하려는 유혹을 매우 자주 받습니다. (이해합니다.)</li>
+<li>이 때, 수정하였다면 <code>반드시</code> 여러분 환경에서도 똑같이 반영을 해줘야 합니다.
+<ul>
+<li>물론, 대부분 안합니다.</li>
+</ul></li>
+<li>그리고, <code>git push</code>를 시도합니다.</li>
+<li>이 때 아래와 같은 메시지가 출력됩니다. ```bash git push</li>
+</ul></li>
+</ul>
+<p>To <a href="https://github.com/yourname/foo.git" class="uri">https://github.com/yourname/foo.git</a></p>
+<p>! [rejected] master -&gt; master (non-fast-forward) error: failed to push some refs to ‘<a href="https://github.com/yourname/foo.git" class="uri">https://github.com/yourname/foo.git</a>’ hint: Updates were rejected because the tip of your current branch is behind hint: its remote counterpart. Integrate the remote changes (e.g. hint: ‘git pull …’) before pushing again. hint: See the ‘Note about fast-forwards’ in ‘git push –help’ for details. ```</p>
+<ul>
+<li>이 때, 매우 간단하게 <code>git pull</code>을 시도합니다.</li>
+<li>그리고 처음부터 <code>add</code>, <code>commit</code>, <code>push</code>를 시도하면 됩니다.</li>
+</ul>
+</div>
 </div>
 
 

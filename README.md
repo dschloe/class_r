@@ -13,15 +13,15 @@
 
 - 이제 `RStudio`에서 `프로젝트`를 클릭한 후 아래 화면에서 `Version Control`을 클릭합니다. 
 
-![](r4ds/img/project01.png)
+![](img/project01.png)
 
 - 그 다음은 `github`에서 주소를 클릭합니다. 
 
-![](r4ds/img/project02.png)
+![](img/project02.png)
 
 - 복사한 주소를 아래그림과 같이 주소를 붙여 넣습니다. 
 
-![](r4ds/img/project03.png)
+![](img/project03.png)
 
 - Note 
   + 이 때 주의해야 하는 것은 경로입니다. 초보자들의 경우 바탕화면에 저장소를 설정하시기를 바랍니다. 
