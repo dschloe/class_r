@@ -130,11 +130,13 @@ list.files(path = "data/Mcorporation/상품 카테고리
 files <- list.files(path = "data/Mcorporation/상품 카테고리 데이터_KDX 시각화 경진대회 Only/", pattern = "*.xlsx", full.names = T)
 
 products <- sapply(files, read_excel, simplify=FALSE) %>% 
-  bind_rows(.id = "id")
+  bind_rows(.id = "id") %>% 
+  select(-id)
 
 glimpse(products)
 ```
 ## 3단계 데이터 시각화
+- 먼저, 데이터 저장 용량을 고려하여 `products` 데이터셋을 제외하고 나머지는 모두 삭제한다. 
 - 데이터 시각화는 변수의 종류에 따른 시각화를 구현한 것이다. 
 - 시각화 참조자료는 다음에서 작성이 가능하다. 
   +  [Top 50 ggplot2 Visualizations - The Master List (With Full R Code)](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)
@@ -226,9 +228,6 @@ cat_rev <- aggregate(products$카테고리명, by=list(products$구매금액), F
 ```{r}
 library(ggplot2) 
 
-# 맥 유저만 아래 코드 적용
-theme_set(theme_classic(base_family='NanumGothic'))
-
 cat_rev <- products %>%
   group_by(카테고리명) %>% 
   summarise(mean = mean(구매금액)) %>% 
@@ -236,11 +235,13 @@ cat_rev <- products %>%
 
 cat_rev <- cat_rev[order(cat_rev$mean, decreasing = TRUE), ]  # sort
 cat_rev$카테고리명 <- factor(cat_rev$카테고리명, levels = cat_rev$카테고리명)  # to retain the order in plot.
-
 head(cat_rev)
 ```
 - 이제 위 데이터를 시각화 해본다. 
 ```{r}
+# 맥 유저만 아래 코드 적용
+theme_set(theme_classic(base_family='NanumGothic'))
+
 ggplot(cat_rev %>% head(20), aes(x = 카테고리명, y = mean)) + 
   geom_bar(stat="identity", width=.5, fill="tomato3") + 
   theme(axis.text.x = element_text(angle=65, vjust=0.6)) + 
@@ -248,6 +249,12 @@ ggplot(cat_rev %>% head(20), aes(x = 카테고리명, y = mean)) +
        subtitle="카테고리명 Vs Avg. 구매금액", 
        caption="source: products")
 ```
+
+```{r}
+category_list <- cat_rev$카테고리명
+category_list
+```
+- 위 `list` 추후 작성을 위해 `list`로 남겨 놓는다. 
 
 - 이번에는 카테고리명 ~ 평균 구매건수에 관한 시각화를 작성해본다. 
 - 해석은 각자 진행하고 반영하면 된다. 
@@ -284,4 +291,103 @@ g + geom_point(col="tomato3") +
        title="Counts Plot")
 ```
 
-- 없음은 
+- `없음`의 값이 상대적으로 작기 때문에 해당 영역은 제외하고 데이터셋을 재구성한다. 
+- 이 때, `filter()` 함수를 활용한다. 
+```{r}
+gender_products <- products %>% 
+  filter(고객성별 != "없음")
+
+dim(products); dim(gender_products)
+```
+- 약 10만개의 데이터가 줄어든 것을 확인할 수 있다. 
+```{r}
+temp_products <- sample_n(gender_products, 1000)
+g <- ggplot(temp_products, aes(x = 구매수, y = 구매금액))
+# g + geom_count(col="tomato3", show.legend=F) +
+g + geom_point(col="tomato3") + 
+  scale_x_log10() + 
+  scale_y_log10() + 
+  facet_grid(고객성별 ~.) + 
+  labs(subtitle="products: count vs revenue ", 
+       y="revenue", 
+       x="count", 
+       title="Counts Plot")
+```
+
+- 훨씬 더 시각적으로 비교가 잘 되는 것을 확인할 수 있다. 
+- 이번에는 막대 그래프를 추가해본다. 
+
+```{r}
+cat_rev <- products %>%
+  group_by(카테고리명, 고객성별) %>% 
+  summarise(mean = mean(구매금액)) %>% 
+  arrange(desc(mean)) 
+
+glimpse(cat_rev)
+cat_rev <- cat_rev[order(cat_rev$mean, decreasing = TRUE), ]  # sort
+cat_rev
+```
+
+- 위 데이터를 보면 알겠지만, `없음`이 데이터의 비율이 높게 형성된 것을 확인할 수 있다. 
+- 이는 마케팅 기획에 있어서 적합하지 않을 뿐 아니라 데이터의 상대적으로 적기 때문에 제거한다. 
+```{r}
+cat_rev2 <- cat_rev %>% 
+  filter(고객성별 != "없음")
+cat_rev2
+
+ggplot(cat_rev2, aes(x = 카테고리명, y = mean, fill = 고객성별)) +
+  geom_bar(stat="identity", position = "dodge", width=.5)
+```
+<br>
+- 데이터의 값이 많다보니 카테고리를 구분해서 보도록 한다.
+
+```{r}
+i = 1
+j = i+7
+category_list <- as.character(category_list)
+
+cat_rev2 %>% 
+  filter(카테고리명 %in% category_list[c(i:as.numeric(i+7))]) %>% 
+  ggplot(aes(x = 카테고리명, y = mean, fill = 고객성별)) +
+  geom_bar(stat="identity", position = "dodge", width=.5) + 
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) + 
+  labs(title="Ordered Bar Chart", 
+  subtitle="카테고리명 Vs Avg. 구매금액 by 고객성별", 
+  caption="source: products")
+```
+
+<br>
+- 우선 샘플로 시각화를 구현한다. 
+
+```{r}
+category_graph <- function(df, cat_list = cat_list) {
+  category_list <- sort(as.character(cat_list))
+
+  print(category_list)
+  for (i in seq(1, 64, by = 8)) {
+      i = i
+      j = i+7
+      plot <- df %>% 
+        filter(카테고리명 %in% category_list[i:j]) %>% 
+        ggplot(aes(x = 카테고리명, y = mean, fill = 고객성별)) +
+        geom_bar(stat="identity", position = "dodge", width=.5) + 
+        theme(axis.text.x = element_text(angle=65, vjust=0.6)) + 
+        labs(title="Ordered Bar Chart", 
+             subtitle="카테고리명 Vs Avg. 구매금액 by 고객성별", 
+             caption="source: products")
+      
+      print(plot)
+  }
+}
+
+category_graph(cat_rev2, category_list)
+```
+<br>
+- `가나다` 순으로 `카테고리`별 `시각화`를 구현한 뒤, `고객성별`로 비교할 수 있다. 
+- 카테고리, 고객성별 대신에, 고객나이, OS유형 등을 조합해서 시각화를 작성한 뒤 비교하는 것은 수강생들에게 남겨둔다. 
+
+### (4) 시계열 그래프
+- 이번에는 시계열 그래프를 작성한다. 
+- 마찬가지로 [Top 50 ggplot2 Visualizations - The Master List (With Full R Code)](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)에서 시각화를 선 구현한 뒤, 본 그래프를 작성해본다. 
+
+
