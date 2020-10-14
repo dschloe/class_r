@@ -135,6 +135,7 @@ products <- sapply(files, read_excel, simplify=FALSE) %>%
 
 glimpse(products)
 ```
+
 ## 3단계 데이터 시각화
 - 먼저, 데이터 저장 용량을 고려하여 `products` 데이터셋을 제외하고 나머지는 모두 삭제한다. 
 - 데이터 시각화는 변수의 종류에 따른 시각화를 구현한 것이다. 
@@ -511,4 +512,20 @@ shinhancard %>%
 <br>
 
 - 위와 같이 그래프를 확장하면서 계속 그릴 수가 있다. 
-- 성별로 구분해서 보는 것도 도움이 되기 때문에, 이 부분은 수강생들에게 맡기도록 한다. 
+- 이번에는 `OS`별로 그래프를 작성해본다. 
+```{r}
+library(zoo)
+products %>%
+  mutate(년월 = as.yearmon(as.character(구매날짜), "%Y%m")) %>%
+  rename(date = "년월") %>%
+  group_by(date, OS유형) %>%
+  summarise(mean = mean(구매금액)) %>% 
+  ggplot(aes(x = date)) +
+  geom_line(aes(y = mean, colour = OS유형)) +
+  labs(title="Time Series Chart",
+       subtitle="Avg. Sales from 'Shinhan Card' Dataset",
+       caption="Source: Shinhan Card",
+       y="Avg. Sales (1000)")
+```
+
+

@@ -1,0 +1,53 @@
+---
+title: "ch05_exploring_assumptions"
+author: "Evan"
+date: "10/14/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 개요
+- `유쾌한 R통계학` 교재를 통해 수강생들과 통계를 배우도록 한다. 
+- 자료에 관한 가정
+
+## 데이터 불러오기 예제
+### (1) 패키지 불러오기
+```{r}
+library(dplyr)
+library(car)
+library(ggplot2)
+library(pastecs)
+library(psych)
+# library(Rcmdr) 설치하지 않는다. 
+```
+### (2) 데이터 불러오기
+
+```{r}
+dlf <- read.delim("data/DownloadFestival(No Outlier).dat", header = TRUE)
+
+glimpse(dlf)
+```
+
+### (3) 시각화 예제
+```{r}
+hist.day1 <- ggplot(dlf, aes(day1)) + 
+  theme(legend.position = "none") + 
+  geom_histogram(aes(y = ..density..), colour = "black", fill = "white") + 
+  labs(x = "Hygiene score on day 1", y = "Density")
+
+hist.day1
+```
+
+<br>
+`qqplot`을 그려본다. 
+
+```{r}
+ggplot(dlf, aes(sample=day1)) + stat_qq()
+```
+- 그 다음부터는 위와 같이 진행하시면 됩니다. 
+
+
+
