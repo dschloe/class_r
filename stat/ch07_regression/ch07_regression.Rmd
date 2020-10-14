@@ -35,3 +35,7 @@ albumSales.1 <- lm(sales ~ adverts, data = album1, na.action = na.exclude)
 
 
 ### (4) 단순회귀의 해석
+```{r}
+summary(albumSales.1)
+```
+

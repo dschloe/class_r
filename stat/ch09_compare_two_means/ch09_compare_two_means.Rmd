@@ -1,0 +1,62 @@
+---
+title: "ch09_compare_two_means"
+author: "Evan"
+date: "10/14/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## 개요
+- `유쾌한 R통계학` 교재를 통해 수강생들과 통계를 배우도록 한다. 
+- 두 평균을 비교하는 것에 대해 배운다. 
+
+## 데이터 불러오기 예제
+### (1) 패키지 불러오기
+```{r}
+library(ggplot2)
+library(pastecs)
+```
+
+```r
+> install.packages("WRS")
+Error in library(WRS) : there is no package called ‘WRS’
+```
+- 위와 같은 에러가 날 것이다. 
+- 다음과 같이 진행한다. 
+```r
+install.packages("devtools")
+devtools::install_github("nicebread/WRS", subdir="pkg")
+```
+
+```{r}
+library(WRS)
+```
+
+
+### (2) 데이터 불러오기
+
+```{r}
+spiderWide <- read.delim("data/SpiderWide.dat", header = TRUE)
+spiderLong <- read.delim("data/SpiderLong.dat", header = TRUE)
+
+glimpse(spiderWide)
+glimpse(spiderLong)
+```
+
+## 차이 살펴보기
+
+### 단계 1: 각 실험 참가자의 평균 계산
+```{r}
+spiderWide$pMean <- (spiderWide$picture + spiderWide$real)/2
+```
+
+### 단계 2: 총평균 계산
+```{r}
+grandMean <- mean(c(spiderWide$picture, spiderWide$real))
+grandMean
+```
+
