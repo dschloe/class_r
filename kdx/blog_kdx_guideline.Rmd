@@ -1,11 +1,21 @@
 ---
-title: "kdx_guideline"
-author: "Evan"
-date: "10/6/2020"
-output:
-  html_document:
+title: "KDX Competition Guideline"
+date: 2020-10-14T09:10:39+09:00
+output: 
+  html_document: 
+    keep_md: true
     toc: true
-    toc_float: true
+tags:
+  - "R"
+  - "Data Visualization"
+  - "Data Transformation"
+categories:
+  - "R"
+  - "Data Visualization"
+  - "Data Transformation"
+menu: 
+  r:
+    name: KDX Competition Guideline
 ---
 
 ```{r setup, include=FALSE}
