@@ -60,3 +60,4 @@ grandMean <- mean(c(spiderWide$picture, spiderWide$real))
 grandMean
 ```
 
+

@@ -50,4 +50,13 @@ ggplot(dlf, aes(sample=day1)) + stat_qq()
 - 그 다음부터는 위와 같이 진행하시면 됩니다. 
 
 
+```{r}
+library(car)
+with(Moore, leveneTest(conformity, fcategory))
+with(Moore, leveneTest(conformity, interaction(fcategory, partner.status)))
+leveneTest(conformity ~ fcategory*partner.status, data=Moore)
+leveneTest(lm(conformity ~ fcategory*partner.status, data=Moore))
+leveneTest(conformity ~ fcategory*partner.status, data=Moore, center=mean)
+leveneTest(conformity ~ fcategory*partner.status, data=Moore, center=mean, trim=0.1)
+```
 
