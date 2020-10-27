@@ -5,8 +5,11 @@ library(DBI)
 library(bigrquery)
 library(dplyr)
 
+#### Sample ####
+# 프로젝트 ID
 billing <- "bigquerytutorial-274406"
 
+# DB연동
 con <- dbConnect(
   bigrquery::bigquery(),
   project = "publicdata",
@@ -14,15 +17,31 @@ con <- dbConnect(
   billing = billing
 )
 
+# 쿼리문 작성
 sql <- "SELECT year, month, day, weight_pounds FROM `publicdata.samples.natality`"
 
+# 프로젝트 내 DB접근
 tb <- bq_project_query(billing, sql)
+
+# Data 불러오기
 bq_table_download(tb, max_results = 10)
 
-
+#### 데이터 불러오기 연동 ####
 sql_house <- "SELECT * FROM `bigquerytutorial-274406.house_price.train`"
 house_tb <- bq_project_query(billing, sql_house)
-
 train <- bq_table_download(house_tb)
-
 glimpse(train)
+
+#### 정형 데이터를 빅쿼리에 저장하기 ####
+con <- dbConnect(
+  bigrquery::bigquery(),
+  project = "bigquerytutorial-274406",
+  dataset = "house_price",
+  billing = billing
+)
+
+con
+DBI::dbListTables(con)
+
+# mtcars 데이터를 빅쿼리에 저장하기
+DBI::dbWriteTable(con, "mtcars", mtcars)
