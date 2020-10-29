@@ -1,0 +1,32 @@
+---
+title: "Big Query with R"
+date: 2020-04-20T00:10:39+09:00
+output: 
+  html_document: 
+    keep_md: true
+    toc: true
+tags:
+  - "Database Connection"
+  - "R"
+  - "Big Query"
+categories:
+  - "Database Connection"
+  - "R"
+  - "Big Query"
+menu: 
+  r:
+    name: Big Query with R
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 개요 
+- R은 데이터 분석에 최적화된 언어이다
+- 초심자에게 DB 연동은 쉬운 과제는 아니다. 
+- 그러나 클라우드 DB를 통해 보다 쉽게 해결할 수 있다. 
+
+## 주의
+- 본 포스트는 빅쿼리 및 구글 클라우드를 어느정도 접해본 사람들을 위한 글입니다. 
+
